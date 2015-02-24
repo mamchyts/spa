@@ -1,0 +1,117 @@
+@left_col_width: 250px;
+
+body{
+    font-family: Arial, sans-serif !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;;
+    text-overflow: ellipsis !important;;
+}
+
+
+#bg{
+    background-image: url('../img/Nature-Full-HD-Wallpaper-national-geographic-7822319-1920-1080.jpg');;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    z-index: -1;
+}
+
+header{
+    margin-bottom: 20px;
+}
+
+.fadeBg{
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    border: none;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowMTgwMTE3NDA3MjA2ODExODcxRjkzRDlDRDEwRDZCMCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGRjNBOTUyOUMxN0QxMUUzQThBRUEwRTI1RTFGQkNGNyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGRjNBOTUyOEMxN0QxMUUzQThBRUEwRTI1RTFGQkNGNyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NDE1NkVERjgyMjA2ODExOTEwOTg2N0FGMDc2QUFCNiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowMTgwMTE3NDA3MjA2ODExODcxRjkzRDlDRDEwRDZCMCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsYv1oYAAAAwSURBVHja7M4xAQAACAMg17+nNWYMH0hA2u48ioCAgICAgICAgICAgICAwHfgBBgAQLZ8gRQjNJIAAAAASUVORK5CYII=);
+}
+
+.container{
+    .layout{
+        .l-layout{
+            position: absolute;
+            width: @left_col_width;
+            padding: 5px 15px;
+            color: #757474;
+            .row{
+                cursor: pointer;
+                .col-sm-12{
+                    line-height: 25px;
+                    height: 25px;
+                    .fa{
+                        margin-right: 6px;
+                    }
+                }
+            }
+            .row.active{
+                .col-sm-12{
+                    background-color: #ffffff;
+                    color: #333333;
+                    font-weight: bold;
+                }
+            }
+            .row:hover{
+                .col-sm-12{
+                    background-color: #ebebea;
+                }
+            }
+        }
+        .r-layout{
+            margin-left: @left_col_width + 20;
+            font-size: 14px;
+            color: #757474;
+            .row{
+                .col-sm-4{
+                    padding-left: 60px;
+                    position: relative;
+                    input[type=checkbox], span.fa{
+                        display: block;
+                        position: absolute;
+                    }
+                    input[type=checkbox]{
+                        margin: 9px 0px 0px -36px;
+                    }
+                    span.fa{
+                        margin: 5px 0px 0px -14px;
+                        font-size: 23px;
+                    }
+                }
+                .col-sm-6{
+                    padding-left: 20px;
+                    position: relative;
+                    span.fa{
+                        display: block;
+                        position: absolute;
+                        margin: -2px 0px 0px -18px;
+                        font-size: 17px
+                    }
+                    .inner{
+                        span.subject{
+                            color: #333;
+                            margin-right: 20px;
+                        }
+                    }
+                }
+                .col-sm-2{
+                    color: #333;
+                }
+                span.fa{
+                    color: #B5AFAF;
+                }
+                .col-row, .col-row .inner{
+                    line-height: 30px;
+                    overflow: hidden;
+                    
+                }
+                .clear{
+                    border-bottom: 1px solid #dcdcdc;
+                    clear: both;
+                    margin: 0 15px;
+                }
+            }
+        }
+    }
+}

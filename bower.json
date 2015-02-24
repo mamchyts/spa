@@ -15,7 +15,11 @@
   ],
   "dependencies": {
     "bootstrap": "*",
+    "less": "*",
     "backbone": "*",
     "underscore": "*"
+  },
+  "devDependencies": {
+    "font-awesome": "~4.3.0"
   }
 }
