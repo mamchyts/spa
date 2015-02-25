@@ -3,7 +3,6 @@
     <head lang="ru">
         <meta charset="UTF-8">
         <title>TEST SPA</title>
-        <link rel="stylesheet/less" type="text/css" href="./style/main.less">
     </head>
     <body>
         <div id="bg"></div>
@@ -21,41 +20,56 @@
 
         <div class="container" >
             <div class="row layout">
-                <div class="l-layout fadeBg">
-                    <div class="row active"><div class="col-sm-12"><span class="fa fa-envelope"></span> Входящие</div></div>
-                    <div class="row"><div class="col-sm-12"><span class="fa fa-folder"></span> Vk</div></div>
-                    <div class="row"><div class="col-sm-12"><span class="fa fa-folder"></span> Facebook</div></div>
-                    <div class="row"><div class="col-sm-12"><span class="fa fa-thumbs-down"></span> Спам</div></div>
-                    <div class="row"><div class="col-sm-12"><span class="fa fa-trash"></span> Корзина</div></div>
-                </div>
-                <div class="r-layout fadeBg">
-                    <div class="row">
-                        <div class="col-row col-sm-4">
-                            <div class="abs">
-                                <input type="checkbox" name="select[]" value="">
-                                <span class="fa fa-ellipsis-v"></span>
-                            </div>
-                            <div class="inner">asdasd@asdasd.ru</div>
-                        </div>
-                        <div class="col-row col-sm-6">
-                            <div class="abs">
-                                <span class="fa fa-bookmark"></span>
-                            </div>
-                            <div class="inner">
-                                <span class="subject">Lorem ipsum dolor</span>
-                                <span class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus at eius expedita cum, quaerat</span>
-                            </div>
-                        </div>
-                        <div class="col-row col-sm-2">18 фев</div>
-                        <div class="clear"></div>
-                    </div>
-                </div>
+                <div class="l-layout fadeBg" id="folders"></div>
+                <div class="r-layout fadeBg" id="messages"></div>
             </div>
         </div>
 
 
+        <!--Шаблон элемента folder-->
+        <script type="text/template" id="folder-item-template">
+            <div class="row">
+                <a class="col-sm-12" href="#!/messages/<%=id%>">
+                    <span class="fa <%=fa_class%>"></span>
+                    <%=name%>
+                </a>
+            </div>
+        </script>
+
+
+        <!--Шаблон элемента folder-->
+        <script type="text/template" id="message-item-template">
+            <div class="row">
+                <div class="col-row col-sm-4">
+                    <div class="abs">
+                        <input type="checkbox" name="select[]" value="<%=id%>">
+                        <span class="fa fa-ellipsis-v"></span>
+                    </div>
+                    <div class="inner"><%=from%></div>
+                </div>
+                <div class="col-row col-sm-6">
+                    <div class="abs">
+                        <span class="fa fa-bookmark"></span>
+                    </div>
+                    <div class="inner">
+                        <span class="subject"><%=subject%></span>
+                        <span class="content"><%=content%></span>
+                    </div>
+                </div>
+                <div class="col-row col-sm-2"><%=html_date%></div>
+                <div class="clear"></div>
+            </div>
+        </script>
+
+
+
         <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet/less" type="text/css" href="./style/main.less">
         <script type="text/javascript" src="../bower_components/less/dist/less.min.js"></script>
+        <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
+        <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../bower_components/backbone/backbone.js"></script>
+        <script type="text/javascript" src="./js/main.js"></script>
     </body>
 </html>
