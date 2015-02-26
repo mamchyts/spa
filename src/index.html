@@ -36,18 +36,44 @@
             </div>
         </script>
 
-
-        <!--Шаблон элемента folder-->
+        <!--Шаблон элемента message-->
         <script type="text/template" id="message-item-template">
-            <div class="row">
-                <div class="col-row col-sm-4">
-                    <div class="abs">
-                        <input type="checkbox" name="select[]" value="<%=id%>">
-                        <span class="fa fa-ellipsis-v"></span>
+            <div class="rowMess">
+                <div class="col-row-left">
+                    <input type="checkbox" name="select[]" value="<%=id%>">
+                    <span class="fa fa-ellipsis-v"></span>
+                </div>
+                <div class="col-row-right">
+                    <div class="from">
+                        <div class="inner"><%=from%></div>
                     </div>
+                    <div class="message">
+                        <div class="abs">
+                            <span class="fa fa-bookmark"></span>
+                        </div>
+                        <div class="inner">
+                            <span class="subject"><%=subject%></span>
+                            <span class="content"><%=content%></span>
+                        </div>
+                    </div>
+                    <div class="date"><%=html_date%></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </script>
+
+
+        <!--Шаблон элемента full message-->
+        <script type="text/template" id="full-message-item-template">
+            <div class="row">
+                <div class="col-row colSm1">
+                    <input type="checkbox" name="select[]" value="<%=id%>">
+                    <span class="fa fa-ellipsis-v"></span>
+                </div>
+                <div class="col-row colSm4">
                     <div class="inner"><%=from%></div>
                 </div>
-                <div class="col-row col-sm-6">
+                <div class="col-row colSm6">
                     <div class="abs">
                         <span class="fa fa-bookmark"></span>
                     </div>
@@ -56,7 +82,7 @@
                         <span class="content"><%=content%></span>
                     </div>
                 </div>
-                <div class="col-row col-sm-2"><%=html_date%></div>
+                <div class="col-row colSm2"><%=html_date%></div>
                 <div class="clear"></div>
             </div>
         </script>

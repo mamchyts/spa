@@ -38,7 +38,14 @@ $(document).ready(function(){
         },
 
         toggleClick: function() {
-            console.log("toggleClick", this.model.toJSON());
+            this.resetActive();
+            this.$el.children(0).addClass('active');
+        },
+
+        resetActive: function() {
+            _.each(this.container.children(), function(item){
+                $(item).children(0).removeClass('active');
+            });
         },
 
         change: function() {
@@ -85,7 +92,7 @@ $(document).ready(function(){
         template: _.template($('#message-item-template').html()),
 
         events: {
-            "click .col-sm-12" : "toggleClick",
+            "click .col-row-right" : "openEmail"
         },
 
         initialize: function() {
@@ -93,8 +100,8 @@ $(document).ready(function(){
             this.model.bind('destroy', this.remove, this);
         },
 
-        toggleClick: function() {
-            console.log("toggleClick", this.model.toJSON());
+        openEmail: function() {
+            window.controller.navigate('!/messages/'+window.controller.folder_id+'/'+this.model.get('id'), {trigger: true})
         },
 
         change: function() {
@@ -109,7 +116,6 @@ $(document).ready(function(){
                 return this.remove();
             }
 
-
             this.$el.html(this.template(j_model));
             this.container.append(this.$el);
             return this;
@@ -121,18 +127,92 @@ $(document).ready(function(){
 
 
 
-    var Controller = Backbone.Router.extend({
-        routes: {
-            "": "start", // Пустой hash-тэг
-            "!/": "start", // Начальная страница
-            "!/messages": "messages",
-            "!/messages/:folder": "messages",
-            "!/messages/:folder/:id": "email"
+    /********** SINGLE MESSAGES *************/
+    var FullMessage = Backbone.Model.extend({
+        initialize: function(){
+        },
+        urlRoot: '/messages.php',
+        defaults: {
+            id: 0,
+            folder_id: 0,
+            subject: 'Default subject',
+            content: ''
+        }
+    });
+    window.fill_message = new FullMessage();
+
+    var FullMessageView = Backbone.View.extend({
+        tagName: 'div',
+
+        // container of all messages
+        container: $('#messages'),
+
+        template: _.template($('#full-message-item-template').html()),
+
+        events: {
+            "click .col-row-right" : "openEmail"
         },
 
-        isStarted: false,
+        initialize: function() {
+            this.model.bind('change', this.render, this);
+            this.model.bind('destroy', this.remove, this);
+        },
 
-        start: function (callback) {
+        openEmail: function() {
+            window.controller.navigate('!/messages/'+window.controller.folder_id+'/'+this.model.get('id'), {trigger: true})
+        },
+
+        change: function() {
+            console.log("change");
+        },
+
+        render: function() {
+            var j_model = this.model.toJSON();
+
+            // delete old messages from html
+            if(!('id' in j_model)){
+                return this.remove();
+            }
+
+            this.$el.html(this.template(j_model));
+            this.container.append(this.$el);
+            return this;
+        }
+    });
+    /********** SINGLE MESSAGES *************/
+
+
+
+
+    var Controller = Backbone.Router.extend({
+        routes: {
+            "": "init", // Пустой hash-тэг
+            "!/": "init", // Начальная страница
+            "!/messages": "messages",
+            "!/messages/:folder": "messages",
+            "!/messages/:folder/:id": "email",
+            "*path": "error"
+        },
+
+        is_started: false,
+
+        // current folder id
+        folder_id: 0,
+
+        // current message id
+        message_id: 0,
+
+        init: function () {
+            // get all folders
+            this.getFolders();
+
+            // get all messages
+            this.getMessages();
+
+            window.controller.is_started = true;
+        },
+
+        getFolders: function (callback) {
             // get all folders
             window.folders.fetch({success: function(collection, response, options){
                 // render folders
@@ -140,32 +220,23 @@ $(document).ready(function(){
                     new FolderView({model: item}).render()
                 });
 
-                window.controller.isStarted = true;
-
                 if(callback)
                     callback();
             }});
         },
 
-        messages: function (folder) {
-            if(!this.isStarted){
-                // get folders and run againe
-                return this.start(function(){
-                    window.controller.messages(folder)
-                });
-            }
-
-            folder = parseInt(folder) || 0
+        getMessages: function (folder) {
+            this.folder_id = parseInt(folder) || 0
 
             // delete old data
             if(window.messages.models.length){
-                this.clearMessages(window.messages)
+                this.clearCollection(window.messages)
             }
 
             // get messages from folders
             window.messages.fetch({
                 data: {
-                    'folder_id': folder
+                    'folder_id': this.folder_id
                 },
                 success: function(collection, response, options){
                     // render folders
@@ -176,18 +247,49 @@ $(document).ready(function(){
             });
         },
 
+        messages: function (folder) {
+            if(!this.is_started){
+                // get all folders
+                this.getFolders();
+
+                window.controller.is_started = true;
+            }
+
+            this.getMessages(folder);
+        },
+
         email: function (folder, id) {
+            if(!this.is_started){
+                // get all folders
+                this.getFolders();
+                window.controller.is_started = true;
+            }
+
+            this.message_id = id
+
+            // get messages from folders
+            window.fill_message.fetch({
+                data: {
+                    'message_id': this.message_id
+                },
+                success: function(collection, response, options){
+                    // render folders
+                    _.each(collection.models, function(item){
+                        new FullMessageView({model: item}).render()
+                    });
+                }
+            });
             console.log("email", folder, id);
         },
 
-        clearMessages: function (collection) {
+        clearCollection: function (collection) {
             _.each(collection.models, function(item){
                 item.clear();
             });
         },
 
         error: function () {
-            console.log("error");
+            window.controller.navigate('!/messages', {trigger: true});
         }
     });
 
