@@ -85,6 +85,7 @@ $(document).ready(function(){
 
     var MessageView = Backbone.View.extend({
         tagName: 'div',
+        className: 'fadeBg',
 
         // container of all messages
         container: $('#messages'),
@@ -131,7 +132,6 @@ $(document).ready(function(){
     var FullMessage = Backbone.Model.extend({
         initialize: function(){
         },
-        urlRoot: '/messages.php',
         defaults: {
             id: 0,
             folder_id: 0,
@@ -139,31 +139,41 @@ $(document).ready(function(){
             content: ''
         }
     });
-    window.fill_message = new FullMessage();
+
+    var FullMessageCoollection = Backbone.Collection.extend({
+        model : FullMessage,
+        url: '/messages.php'
+    });
+
+    window.full_message = new FullMessageCoollection();
 
     var FullMessageView = Backbone.View.extend({
         tagName: 'div',
+        className: 'fadeBg',
+
 
         // container of all messages
         container: $('#messages'),
 
-        template: _.template($('#full-message-item-template').html()),
+        templateBtns: _.template($('#full-message-btns-template').html()),
+
+        templateMessage: _.template($('#full-message-item-template').html()),
 
         events: {
-            "click .col-row-right" : "openEmail"
         },
 
         initialize: function() {
             this.model.bind('change', this.render, this);
-            this.model.bind('destroy', this.remove, this);
-        },
-
-        openEmail: function() {
-            window.controller.navigate('!/messages/'+window.controller.folder_id+'/'+this.model.get('id'), {trigger: true})
+            this.model.bind('destroy', this.destroy, this);
         },
 
         change: function() {
             console.log("change");
+        },
+
+        destroy: function(){
+            this.container.html('');
+            return this.remove();
         },
 
         render: function() {
@@ -171,10 +181,11 @@ $(document).ready(function(){
 
             // delete old messages from html
             if(!('id' in j_model)){
-                return this.remove();
+                return this.destroy();
             }
 
-            this.$el.html(this.template(j_model));
+            this.$el.html(this.templateMessage(j_model));
+            this.container.html(this.templateBtns());
             this.container.append(this.$el);
             return this;
         }
@@ -191,7 +202,7 @@ $(document).ready(function(){
             "!/messages": "messages",
             "!/messages/:folder": "messages",
             "!/messages/:folder/:id": "email",
-            "*path": "error"
+            "*default": "defaultRoute"
         },
 
         is_started: false,
@@ -232,6 +243,9 @@ $(document).ready(function(){
             if(window.messages.models.length){
                 this.clearCollection(window.messages)
             }
+            if(this.message_id != 0){
+                this.clearCollection(window.full_message)
+            }
 
             // get messages from folders
             window.messages.fetch({
@@ -241,7 +255,7 @@ $(document).ready(function(){
                 success: function(collection, response, options){
                     // render folders
                     _.each(collection.models, function(item){
-                        new MessageView({model: item}).render()
+                        new MessageView({model: item}).render();
                     });
                 }
             });
@@ -251,7 +265,6 @@ $(document).ready(function(){
             if(!this.is_started){
                 // get all folders
                 this.getFolders();
-
                 window.controller.is_started = true;
             }
 
@@ -268,27 +281,28 @@ $(document).ready(function(){
             this.message_id = id
 
             // get messages from folders
-            window.fill_message.fetch({
+            window.full_message.fetch({
                 data: {
                     'message_id': this.message_id
                 },
                 success: function(collection, response, options){
-                    // render folders
+                    // render full message view
                     _.each(collection.models, function(item){
                         new FullMessageView({model: item}).render()
                     });
                 }
             });
-            console.log("email", folder, id);
         },
 
         clearCollection: function (collection) {
-            _.each(collection.models, function(item){
-                item.clear();
-            });
+            if(collection.models){
+                _.each(collection.models, function(item){
+                    item.clear();
+                });
+            }
         },
 
-        error: function () {
+        defaultRoute: function () {
             window.controller.navigate('!/messages', {trigger: true});
         }
     });

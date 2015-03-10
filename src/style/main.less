@@ -22,8 +22,21 @@ body{
     z-index: -1;
 }
 
+.btn{
+    padding: 2px 6px;
+}
+
 header{
     margin-bottom: 20px;
+    form.navbar-form{
+        padding-left: 0px;
+        .form-control, .btn{
+            border-radius: 0px;
+        }
+        .form-control{
+            height: 26px;
+        }
+    }
 }
 
 .fadeBg{
@@ -122,6 +135,29 @@ header{
             .clear{
                     border-bottom: 1px solid #dcdcdc;
                     clear: both;
+                }
+            }
+            .controlBtns{
+                margin-bottom: 20px;
+                .btn{
+                    padding: 2px 5px;
+                    border-radius: 0px;
+                    .glyphicon{
+                        margin-left: 5px;
+                        font-size: 12px;
+                    }
+                }
+            }
+            .fullMessageView{
+                padding: 10px 25px;
+                white-space: normal;
+                .content{
+                    #mail-header{
+                        margin-bottom: 10px;
+                        text-decoration: underline;
+                        white-space: normal;
+                        font-style: italic;
+                    }
                 }
             }
         }

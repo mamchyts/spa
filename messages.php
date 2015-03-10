@@ -19,6 +19,16 @@
             }
             $messages = $tmp;
         }
+        elseif(!empty($_REQUEST['message_id'])){
+            $tmp = [];
+            foreach ($messages as $m) {
+                if($m['id'] == $_REQUEST['message_id']){
+                    $tmp[] = $m;
+                    break;
+                }
+            }
+            $messages = $tmp;
+        }
     }
 
     echo json_encode($messages);

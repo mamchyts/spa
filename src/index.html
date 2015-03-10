@@ -21,7 +21,7 @@
         <div class="container" >
             <div class="row layout">
                 <div class="l-layout fadeBg" id="folders"></div>
-                <div class="r-layout fadeBg" id="messages"></div>
+                <div class="r-layout" id="messages"></div>
             </div>
         </div>
 
@@ -65,25 +65,26 @@
 
         <!--Шаблон элемента full message-->
         <script type="text/template" id="full-message-item-template">
-            <div class="row">
-                <div class="col-row colSm1">
-                    <input type="checkbox" name="select[]" value="<%=id%>">
-                    <span class="fa fa-ellipsis-v"></span>
+            <div class="row fullMessageView">
+                <div class="header">
+
                 </div>
-                <div class="col-row colSm4">
-                    <div class="inner"><%=from%></div>
+                <div class="content">
+                    <div id="mail-header"><%=subject%></div>
+                    <div id="mail-content"><%=content%></div>
                 </div>
-                <div class="col-row colSm6">
-                    <div class="abs">
-                        <span class="fa fa-bookmark"></span>
-                    </div>
-                    <div class="inner">
-                        <span class="subject"><%=subject%></span>
-                        <span class="content"><%=content%></span>
-                    </div>
-                </div>
-                <div class="col-row colSm2"><%=html_date%></div>
+                <div class="footer"></div>
                 <div class="clear"></div>
+            </div>
+        </script>
+
+
+        <!--Шаблон элемента full message-->
+        <script type="text/template" id="full-message-btns-template">
+            <div class="controlBtns">
+                <button type="button" class="btn btn-default">Select All <span class="glyphicon glyphicon-ok"></span></button>
+                <button type="button" class="btn btn-default">Delete <span class="glyphicon glyphicon-trash"></span></button>
+                <button type="button" class="btn btn-default">Replay <span class="glyphicon glyphicon-share-alt"></span></button>
             </div>
         </script>
 
