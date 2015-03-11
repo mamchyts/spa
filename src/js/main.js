@@ -2,6 +2,13 @@
 
 $(document).ready(function(){
 
+    // undescore themplates
+    // change "<%= ... %>" to {{ ... }}
+    _.templateSettings = {
+        interpolate : /\{\{(.+?)\}\}/g
+    };
+
+
     /********** FOLDERS *************/
     var Folder = Backbone.Model.extend({
         initialize: function(){
@@ -9,7 +16,8 @@ $(document).ready(function(){
         defaults: {
             id: 0,
             name: 'Default',
-            fa_class: 'fa-folder'
+            fa_class: 'fa-folder',
+            active: false
         }
     });
 
@@ -149,8 +157,6 @@ $(document).ready(function(){
 
     var FullMessageView = Backbone.View.extend({
         tagName: 'div',
-        className: 'fadeBg',
-
 
         // container of all messages
         container: $('#messages'),
@@ -160,6 +166,7 @@ $(document).ready(function(){
         templateMessage: _.template($('#full-message-item-template').html()),
 
         events: {
+            "click .back" : "backToFolder"
         },
 
         initialize: function() {
@@ -172,8 +179,14 @@ $(document).ready(function(){
         },
 
         destroy: function(){
+            console.log("destroy");
             this.container.html('');
             return this.remove();
+        },
+
+        backToFolder: function(){
+            console.log('backToFolder');
+            window.controller.navigate('!/messages/'+window.controller.folder_id, {trigger: true})
         },
 
         render: function() {
@@ -183,9 +196,15 @@ $(document).ready(function(){
             if(!('id' in j_model)){
                 return this.destroy();
             }
+            var div1 = document.createElement('div');
+            var div2 = document.createElement('div');
+            div2.className = 'fadeBg'
 
-            this.$el.html(this.templateMessage(j_model));
-            this.container.html(this.templateBtns());
+            $(div1).html(this.templateBtns());
+            $(div2).html(this.templateMessage(j_model));
+
+            this.$el.append(div1, div2);
+
             this.container.append(this.$el);
             return this;
         }
@@ -224,10 +243,16 @@ $(document).ready(function(){
         },
 
         getFolders: function (callback) {
+            var self = this;
+
             // get all folders
             window.folders.fetch({success: function(collection, response, options){
                 // render folders
                 _.each(collection.models, function(item){
+                    // set active folder
+                    if(item.id == self.folder_id)
+                        item.set('active', true);
+
                     new FolderView({model: item}).render()
                 });
 
@@ -276,6 +301,14 @@ $(document).ready(function(){
                 // get all folders
                 this.getFolders();
                 window.controller.is_started = true;
+            }
+
+            // delete old data
+            if(window.messages.models.length){
+                this.clearCollection(window.messages)
+            }
+            if(this.message_id != 0){
+                this.clearCollection(window.full_message)
             }
 
             this.message_id = id

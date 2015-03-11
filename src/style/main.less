@@ -1,6 +1,8 @@
-@left_col_width: 250px;
+@left_col_width: 180px;
 
 @hoverColorItem: #ebebea;
+
+@activeFolderColor: #4C3030;
 
 
 body{
@@ -24,6 +26,10 @@ body{
 
 .btn{
     padding: 2px 6px;
+}
+
+.noDisplay{
+    display: none;
 }
 
 header{
@@ -60,13 +66,23 @@ header{
                     .fa{
                         margin-right: 6px;
                     }
+                    .badge{
+                        float: right;
+                        background-color: #DDDDDD;
+                        margin-top: 3px;
+                        color: #337ab7;
+                    }
                 }
             }
             .row.active{
                 .col-sm-12{
                     background-color: #ffffff;
-                    color: #333333;
+                    color: @activeFolderColor;
                     font-weight: bold;
+                    .badge{
+                        background-color: @activeFolderColor;
+                        color: #ffffff;
+                    }
                 }
             }
             .row:hover{
@@ -83,7 +99,7 @@ header{
                 line-height: 30px;
                 .col-row-left{
                     float: left;
-                    width: 5%;
+                    width: 6%;
                     input[type=checkbox], span.fa{
                         display: block;
                         float: left;
@@ -98,15 +114,16 @@ header{
                 }
                 .col-row-right{
                     float: left;
-                    width: 95%;
+                    width: 94%;
                     cursor: pointer;
                     .from{
                         float: left;
-                        width: 30%;
+                        width: 28%;
+                        padding-left: 5px;
                     }
                     .message{
                         float: left;
-                        width: 60%;
+                        width: 58%;
                         padding-left: 20px;
                         .abs{
                             position: absolute;
@@ -121,7 +138,7 @@ header{
                     }
                     .date{
                         float: left;
-                        width: 10%;
+                        width: 14%;
                         padding-left: 15px;
                     }
                     .inner{
@@ -146,6 +163,9 @@ header{
                         margin-left: 5px;
                         font-size: 12px;
                     }
+                }
+                .btn.back{
+                    margin-right: 20px;
                 }
             }
             .fullMessageView{
