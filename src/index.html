@@ -8,7 +8,7 @@
         <div id="bg"></div>
 
         <header>
-            <div class="container  fadeBg">
+            <div class="container fadeBg">
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search">
@@ -18,7 +18,7 @@
             </div>
         </header>
 
-        <div class="container" >
+        <div class="container" id="main-container">
             <div class="row layout">
                 <div class="l-layout fadeBg" id="folders"></div>
                 <div class="r-layout" id="messages"></div>
@@ -41,7 +41,7 @@
             <div class="rowMess">
                 <div class="col-row-left">
                     <input type="checkbox" name="select[]" value="{{id}}">
-                    <span class="fa fa-ellipsis-v"></span>
+                    <span class="fa fa-arrows"></span>
                 </div>
                 <div class="col-row-right">
                     <div class="from">
@@ -97,6 +97,7 @@
         <script type="text/javascript" src="../bower_components/less/dist/less.min.js"></script>
         <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
         <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
         <script type="text/javascript" src="../bower_components/backbone/backbone.js"></script>
         <script type="text/javascript" src="./js/main.js"></script>
     </body>

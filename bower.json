@@ -17,7 +17,8 @@
     "bootstrap": "*",
     "less": "*",
     "backbone": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "jquery-ui": "~1.11.3"
   },
   "devDependencies": {
     "font-awesome": "~4.3.0"
