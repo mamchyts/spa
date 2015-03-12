@@ -282,6 +282,17 @@ $(document).ready(function(){
                     _.each(collection.models, function(item){
                         new MessageView({model: item}).render();
                     });
+
+                    $('#messages').sortable({
+                        axis: 'y',
+                        distance: 10,
+                        handle: ".col-row-left",
+                        opacity: 0.9,
+                        containment: $('#main-container'),
+                        stop: function(e, ui){
+                            console.log(e, ui);
+                        }
+                    });
                 }
             });
         },
