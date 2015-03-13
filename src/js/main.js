@@ -354,4 +354,20 @@ $(document).ready(function(){
     window.controller = new Controller(); // Создаём контроллер
 
     Backbone.history.start();  // Запускаем HTML5 History push
+
+
+    // autocomplete
+    $('#search-input').autocomplete({
+        type: 'GET',
+        width: '400px',
+        paramName: 'q',
+        serviceUrl: '/messages.php',
+        onSelect: function(suggestion){
+            window.controller.folder_id = 0;
+            window.controller.navigate('!/messages/'+window.controller.folder_id+'/'+suggestion.data, {trigger: true});
+            $(this).val('');
+        }
+    });
+
+
 });

@@ -30,8 +30,18 @@
             }
             $messages = $tmp;
         }
+        elseif(!empty($_REQUEST['q'])){
+            $tmp = ['suggestions' => []];
+            foreach ($messages as $m) {
+                if(strpos($m['from'].$m['subject'].$m['content'], $_REQUEST['q']) !== false){
+                    $tmp['suggestions'][] = ['value' => '<em>'.$m['from'].'</em>  &nbsp; '.$m['subject'], 'data' => $m['id']];
+                }
+            }
+            $messages = $tmp;
+        }
     }
 
+    header('Content-Type: application/json');
     echo json_encode($messages);
     exit();
 ?>
