@@ -2,6 +2,53 @@
 
 $(document).ready(function(){
 
+
+    // need for show loader if ajax request too long
+    window.jQueryAjaxLoaderTimeout = [];
+    jQuery.ajaxSetup({
+        beforeSend: function(jqXHR, settings){
+            // don't check autocomplete
+            if(this.url.indexOf('/messages.php?q=') !== -1)
+                return 0
+
+            window.jQueryAjaxLoaderTimeout.push(
+                setTimeout(function() {
+                    $('body').loader('show', { delay: 10});
+
+                    if(window.jQueryAjaxLoaderTimeout.length > 0){
+                        for(var i in window.jQueryAjaxLoaderTimeout){
+                            if(window.jQueryAjaxLoaderTimeout.hasOwnProperty(i)){
+                                if(window.jQueryAjaxLoaderTimeout[i] != false){
+                                    return window.jQueryAjaxLoaderTimeout[i] = false;
+                                }
+                            }
+                        }
+                    }
+
+                }, 150)
+            );
+        },
+        complete: function(response, status){
+            // don't check autocomplete
+            if(this.url.indexOf('/messages.php?q=') !== -1)
+                return 0
+
+            if(window.jQueryAjaxLoaderTimeout.length > 0){
+                for(var i in window.jQueryAjaxLoaderTimeout){
+                    if(window.jQueryAjaxLoaderTimeout.hasOwnProperty(i)){
+                        if(window.jQueryAjaxLoaderTimeout[i] != false){
+                            clearInterval(window.jQueryAjaxLoaderTimeout[i]);
+                            return window.jQueryAjaxLoaderTimeout[i] = false;
+                        }
+                    }
+                }
+            }
+
+            $('body').loader('hide');
+        }
+    })
+
+
     // undescore themplates
     // change "<%= ... %>" to {{ ... }}
     _.templateSettings = {
@@ -354,6 +401,7 @@ $(document).ready(function(){
     window.controller = new Controller(); // Создаём контроллер
 
     Backbone.history.start();  // Запускаем HTML5 History push
+
 
 
     // autocomplete

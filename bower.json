@@ -19,6 +19,7 @@
     "backbone": "*",
     "underscore": "*",
     "font-awesome": "*",
-    "jquery-ui": "*"
+    "jquery-ui": "*",
+    "jquery-loader": "*"
   }
 }
