@@ -38,6 +38,8 @@
                 }
             }
             $messages = $tmp;
+            sleep(1);
+
         }
     }
 

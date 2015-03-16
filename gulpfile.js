@@ -92,8 +92,6 @@ gulp.task('clean', function (cb) {
 
 // следить за изменениями
 gulp.task('watch', function(){
-
-    // new version
     for(var w in path.watch){
         (function(w){
             watch([path.watch[w]], function(event, cb) {

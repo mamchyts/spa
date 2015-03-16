@@ -409,7 +409,14 @@ $(document).ready(function(){
         type: 'GET',
         width: '400px',
         paramName: 'q',
+        deferRequestBy: '50',
         serviceUrl: '/messages.php',
+        onSearchStart: function(query){
+            $(this).addClass('loading');
+        },
+        onSearchComplete: function(query, suggestions){
+            $(this).removeClass('loading');
+        },
         onSelect: function(suggestion){
             window.controller.folder_id = 0;
             window.controller.navigate('!/messages/'+window.controller.folder_id+'/'+suggestion.data, {trigger: true});
