@@ -1,1 +1,1 @@
-# test SPA on backbone + underscore + jquery
+# SPA on backbone + underscore + jquery
